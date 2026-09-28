@@ -54,6 +54,12 @@
     .kicker { display:inline-flex; align-items:center; gap:.5rem; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; background:var(--card); border:1px solid var(--border); padding:.4rem .9rem; border-radius:999px; margin-bottom:1.3rem; }
     .kicker .dot { width:8px; height:8px; border-radius:50%; background:#22c55e; animation:pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+    /* ==== Results video ==== */
+    .results { text-align:center; background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+    .results video { width:100%; max-width:760px; height:auto; border-radius:16px; border:1px solid var(--border); box-shadow:0 20px 50px rgba(0,0,0,.12); display:block; margin:0 auto; }
+    .results .live-tag { display:inline-flex; align-items:center; gap:.5rem; font-size:.78rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:1.2rem; }
+    .results .live-tag .dot { width:8px; height:8px; border-radius:50%; background:#22c55e; animation:pulse 1.6s infinite; }
     h1 { font-family:var(--serif); font-weight:600; font-size:3rem; line-height:1.08; margin-bottom:1.1rem; letter-spacing:-.015em; }
     h1 em { font-style:normal; color:var(--accent); }
     .hero-sub { font-size:1.15rem; color:var(--secondary); max-width:52ch; margin-bottom:1.8rem; line-height:1.6; }
@@ -196,6 +202,16 @@
     <div class="market"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg> Gold &amp; Edelmetalle</div>
   </div>
 </div>
+
+<!-- RESULTS (Autoplay Animation) -->
+<section class="results">
+  <div class="container" style="padding:3.5rem 1.4rem;">
+    <div class="live-tag"><span class="dot"></span> Live Trading-Ergebnisse</div>
+    <video autoplay muted loop playsinline preload="auto" aria-label="Trading Ergebnisse Animation">
+      <source src="/images/trading-results.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
 
 <!-- FEATURES -->
 <section id="funktionen">
