@@ -56,7 +56,8 @@
     h1 { font-family:var(--serif); font-weight:600; font-size:2.4rem; line-height:1.15; color:var(--foreground); margin-bottom:.9rem; letter-spacing:-.01em; }
     .lede { font-size:1.15rem; line-height:1.6; color:var(--secondary); max-width:60ch; margin-bottom:1.5rem; }
     .meta { display:flex; align-items:center; gap:.9rem; font-size:.85rem; color:var(--muted-fg); padding:.9rem 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-bottom:2.2rem; }
-    .avatar { width:42px; height:42px; border-radius:50%; background:var(--primary); color:var(--on-primary); display:flex; align-items:center; justify-content:center; font-weight:600; font-family:var(--serif); }
+    .avatar { width:46px; height:46px; border-radius:50%; background:var(--primary); color:var(--on-primary); display:flex; align-items:center; justify-content:center; font-weight:600; font-family:var(--serif); overflow:hidden; flex-shrink:0; }
+    .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
     .author b { color:var(--primary); display:block; font-size:.9rem; }
     .author span { font-size:.8rem; }
     .meta .readtime { margin-left:auto; display:flex; align-items:center; gap:.4rem; }
@@ -160,7 +161,7 @@
   <p class="figcaption">Trading-Signale live – der Bot analysiert Charts automatisch auf Telegram.</p>
 
   <div class="meta">
-    <div class="avatar">LB</div>
+    <div class="avatar"><img src="/images/lukas-berger.jpg" alt="Profilbild von Lukas Berger, Autor des Erfahrungsberichts"></div>
     <div class="author">
       <b>Lukas Berger</b>
       <span>Online-Marketing &amp; Tool-Tests</span>
@@ -296,7 +297,7 @@
   "datePublished": "2026-09-28",
   "dateModified": "2026-09-28",
   "inLanguage": "de-CH",
-  "author": { "@type": "Person", "name": "Lukas Berger" },
+  "author": { "@type": "Person", "name": "Lukas Berger", "image": "https://crypto-signale.pw/images/lukas-berger.jpg" },
   "publisher": { "@type": "Organization", "name": "Trading Signals" },
   "mainEntityOfPage": "https://crypto-signale.pw/",
   "about": { "@type": "SoftwareApplication", "name": "Trading Signals Bot", "applicationCategory": "FinanceApplication" }
