@@ -79,6 +79,10 @@
 
     blockquote { border-left:2px solid var(--border); padding:.2rem 0 .2rem 1.2rem; margin:1.5rem 0; color:var(--secondary); font-family:var(--serif); font-size:1.1rem; font-style:italic; }
 
+    /* ==== Hero image ==== */
+    .hero-img, .content-img { width:100%; height:auto; border-radius:12px; margin:1.6rem 0 1.8rem; display:block; border:1px solid var(--border); box-shadow:0 4px 16px rgba(0,0,0,.06); }
+    .figcaption { font-size:.8rem; color:var(--muted-fg); text-align:center; margin:-1.2rem 0 1.8rem; }
+
     /* ==== Feature list (2-col) ==== */
     .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.2rem 0 1.5rem; }
     .feature { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1rem 1.1rem; display:flex; gap:.8rem; align-items:flex-start; }
@@ -152,10 +156,13 @@
   <h1>Der Trading Signals Bot – Mein ehrlicher Erfahrungsbericht</h1>
   <p class="lede">Krypto, Aktien und Gold-Signale direkt auf Telegram. Ich habe den Bot im Praxisbetrieb getestet – hier sind Funktionen, Preise, Schwächen und mein Fazit.</p>
 
+  <img class="hero-img" src="/images/crypto-charts.jpg" alt="Crypto-Trading-Charts auf einem Bildschirm – Trading Signals Telegram Bot Signale" loading="eager">
+  <p class="figcaption">Trading-Signale live – der Bot analysiert Charts automatisch auf Telegram.</p>
+
   <div class="meta">
-    <div class="avatar">MF</div>
+    <div class="avatar">LB</div>
     <div class="author">
-      <b>Marco Fiereder</b>
+      <b>Lukas Berger</b>
       <span>Online-Marketing &amp; Tool-Tests</span>
     </div>
     <div class="readtime">
@@ -195,12 +202,17 @@
   </div>
   <p>Dazu kommt ein <strong>Confidence-Score</strong>, der die Entscheidungssicherheit jedes Signals bewertet, und die <strong>Trendstärke-Analyse</strong> mit Volume-Bestätigung. Du siehst auf einen Blick, wie stark ein Signal wirklich ist – statt dir jede einzelne Kerze selbst anzuschauen.</p>
 
+  <img class="content-img" src="/images/trading-charts.jpg" alt="Aktien- und Trading-Charts – Analyse des Trading Signals Bots" loading="lazy">
+  <p class="figcaption">Aktien- &amp; Krypto-Analyse: 5 Indikatoren kombiniert zu einem Confidence-Score.</p>
+
   <h2>Welche Märkte werden abgedeckt?</h2>
   <ul>
     <li><strong>Krypto</strong> (Binance) – Bitcoin, Ethereum &amp; Altcoins</li>
     <li><strong>Aktien &amp; Stocks</strong> (Yahoo Finance)</li>
     <li><strong>Gold</strong> &amp; Edelmetalle</li>
   </ul>
+  <img class="content-img" src="/images/gold-bars.jpg" alt="Goldbarren – Gold Trading Signale vom Trading Signals Bot" loading="lazy">
+  <p class="figcaption">Auch Gold &amp; Edelmetalle werden vom Bot abgedeckt.</p>
   <p>Alles ist nach Kategorie sortiert. Über die Befehle <strong>/crypto</strong>, <strong>/stocks</strong> und <strong>/gold</strong> siehst du nur die Signale, die dich tatsächlich interessieren – kein Rauschen, keine Relevanz-Verluste.</p>
 
   <h3>Warum Telegram?</h3>
@@ -284,7 +296,7 @@
   "datePublished": "2026-09-28",
   "dateModified": "2026-09-28",
   "inLanguage": "de-CH",
-  "author": { "@type": "Person", "name": "Marco Fiereder" },
+  "author": { "@type": "Person", "name": "Lukas Berger" },
   "publisher": { "@type": "Organization", "name": "Trading Signals" },
   "mainEntityOfPage": "https://crypto-signale.pw/",
   "about": { "@type": "SoftwareApplication", "name": "Trading Signals Bot", "applicationCategory": "FinanceApplication" }
