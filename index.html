@@ -574,6 +574,33 @@
     .panel dl dd { color: var(--foreground); }
     .col dt b { font-weight: 700; }
     [data-rise] { will-change: transform, opacity; }
+
+    /* ===== MOBILE (<= 639px) — stack, flow, no stuck content ===== */
+    @media (max-width: 639px) {
+      /* the stack is a normal flow on a phone: every block stays reachable */
+      .layer { position: relative; }
+      /* the timeline copy drops out of its absolute 71% column into the flow */
+      .tl-copy { position: relative; left: auto; top: auto; transform: none;
+        width: auto; max-width: none; pointer-events: auto; }
+      /* the year rides the photograph's middle, not the row's */
+      .year { top: calc(0.41 * (100cqw - 48px) * (462 / 710)); }
+      /* alternating plate side, set per row in JS so the head/rail cannot offset it */
+      .row[data-alt="0"] .plate-box { margin-left: 0; margin-right: auto; }
+      .row[data-alt="1"] .plate-box { margin-left: auto; margin-right: 0; }
+      .tl-head { left: 0; }
+      /* the paddock is a stack on a phone: masthead, figure, report, button */
+      [data-paddock] { --block-h: 900px; --type-min: 13px; --copy-min-size: 17px;
+        --head-left: 24px; --head-top: 24px; --head-min: 40px;
+        --intro-left: 24px; --intro-min-w: calc(100cqw - 48px); --intro-gap: 20px;
+        --intro-bottom: 97px; --band-scale: 1.6; --fig-cap: 600px; --fig-fit: 1;
+        --fig-lift: 73px; --fig-x-override: 62%; }
+      /* the footer masthead is shown on a phone too, above the nav column */
+      [data-footer] .head { display: block; right: auto; left: var(--foot-head-left, 24px);
+        top: var(--foot-head-top, 78px); width: max(25.6944cqw, var(--head-w-min, 240px)); }
+      [data-footer] .head h2 { align-items: flex-start; text-align: left; }
+      .hero-col { padding-bottom: 2rem; gap: 1rem; }
+      .panels { gap: 1rem; }
+    }
     [data-hero] .scene canvas { color: var(--surface-soft); }
     [data-paddock] .contour { color: var(--paddock-contour); }
     [data-footer] .contour { color: var(--footer-contour); }
@@ -1099,6 +1126,14 @@ subscribe(() => {
   const view = window.innerHeight || 1;
   const shrink = phoneMq.matches ? 0 : 1 - RECEDE_SCALE;
   for (const { inner, shade, next } of pinned) {
+    // On a phone the layers are in normal flow, so "the next block covers this
+    // one" never happens — a rect that has scrolled past would read as fully
+    // covered and leave every block permanently shaded.
+    if (phoneMq.matches) {
+      inner.style.transform = ''; inner.style.willChange = '';
+      inner.style.visibility = 'visible'; shade.style.opacity = '0';
+      continue;
+    }
     const p = clamp(1 - next.getBoundingClientRect().top / view);
     const scaled = p > 0 && shrink > 0;
     inner.style.transform = scaled ? `scale(${(1 - shrink * p).toFixed(4)})` : '';
@@ -1255,9 +1290,24 @@ function setupSeason() {
   const tctx = trace.getContext('2d'), dctx = dotsC.getContext('2d');
   const W = 1440, H = 800;
 
+  /** Fit box of the trace, measured once the path exists — see `fit`. */
+  let BBOX = null;
+  /**
+   * From 1024 the artboard is cover-fitted, as the frame draws it. Below that
+   * cover would scale a 1440-wide chart up to a phone's width and crop two
+   * thirds of it away, so the trace is fitted to the width instead and centred
+   * on its own middle.
+   */
   const fit = () => {
     const r = frame.getBoundingClientRect();
     const w = Math.max(1, r.width), h = Math.max(1, r.height);
+    if (w < 1024 && BBOX) {
+      const s = w / (BBOX.w * 1.06);
+      const tx = w / 2 - BBOX.cx * s;
+      const ty = h * 0.5 - BBOX.cy * s;
+      stage.style.transform = `translate(${tx.toFixed(2)}px, ${ty.toFixed(2)}px) scale(${s.toFixed(4)})`;
+      return;
+    }
     const s = Math.max(w / W, h / H);
     stage.style.transform = `translate(${((w - W * s) / 2).toFixed(2)}px, ${((h - H * s) / 2).toFixed(2)}px) scale(${s.toFixed(4)})`;
   };
@@ -1289,6 +1339,15 @@ function setupSeason() {
       pts.push([x, y]);
     }
     return pts;
+  })();
+  (() => {
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const p of PATH) {
+      if (p[0] < minX) minX = p[0]; if (p[0] > maxX) maxX = p[0];
+      if (p[1] < minY) minY = p[1]; if (p[1] > maxY) maxY = p[1];
+    }
+    BBOX = { w: maxX - minX, h: maxY - minY, cx: (minX + maxX) / 2, cy: (minY + maxY) / 2 };
+    fit();
   })();
   const CUM = PATH.reduce((acc, p, i) => {
     if (i === 0) return [0];
@@ -1527,9 +1586,10 @@ const ENTRIES = [
 function buildTimeline() {
   const wrap = $('#tlWrap');
   if (!wrap) return;
-  ENTRIES.forEach((e) => {
+  ENTRIES.forEach((e, index) => {
     const row = document.createElement('div');
     row.className = 'row ' + (e.frame === 'centre' ? 'centre' : 'side ' + e.align);
+    row.dataset.alt = String(index % 2);
     row.innerHTML =
       `<div class="plate-box"><div class="plate">
         <div class="fill">${plateMotif}</div>
@@ -1547,6 +1607,14 @@ function buildTimeline() {
     const pt = PLATE_TRAVEL[e.frame];
     const baseBox = e.frame === 'centre' ? (o) => `translate(-50%, ${o}px)` : (o) => `translateY(${o}px)`;
     onScrub(row, 'top_bottom', 'bottom_top', (p) => {
+      // The rows stack as a column on a phone and the layers sit in flow, so
+      // the parallax would only push them out of their own layout.
+      if (phoneMq.matches) {
+        box.style.transform = '';
+        if (year) year.style.transform = '';
+        if (copy) copy.style.transform = '';
+        return;
+      }
       const o = (1 - 2 * p);
       const po = o * pt;
       box.style.transform = baseBox(po);
