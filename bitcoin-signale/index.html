@@ -3,155 +3,264 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08080C">
   <title>Bitcoin Signale analysieren – Einstieg, SL & TP richtig setzen</title>
-  <meta name="description" content="Bitcoin Signale richtig lesen und handeln: Einstieg, Stop-Loss und Take-Profit anhand von RSI, EMA und MACD. Automatische BTC-Signale auf Telegram.">
+  <meta name="description" content="Bitcoin Signale richtig lesen und handeln: Einstieg, Stop-Loss und Take-Profit anhand von RSI, EMA und MACD.">
   <meta property="og:title" content="Bitcoin Signale analysieren – Einstieg, SL & TP richtig setzen">
-  <meta property="og:description" content="Bitcoin Signale richtig lesen und handeln: Einstieg, Stop-Loss und Take-Profit anhand von RSI, EMA und MACD. Automatische BTC-Signale auf Telegram.">
+  <meta property="og:description" content="Bitcoin Signale richtig lesen und handeln: Einstieg, Stop-Loss und Take-Profit anhand von RSI, EMA und MACD.">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="de_CH">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="/images/favicon.png">
-  <link rel="apple-touch-icon" href="/images/logo.png">
+  <link rel="apple-touch-icon" href="/images/logo.jpg">
   <link rel="canonical" href="https://crypto-signale.pw/bitcoin-signale/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-/* Outstand design system: ink surfaces, lime accent, Rethink Sans / Manrope */
-:root {
-  --primary: #141414; --on-primary: #F2F2F3; --secondary: #B0B1B5;
-  --accent: #CDF140; --on-accent: #0F0F0F; --background: #0F0F0F;
-  --foreground: #F2F2F3; --card: #141414; --muted: #1A1A1A;
-  --muted-fg: #96979C; --border: #1F1F1F;
-  --accent-soft: #D4F458; --ink-700: #262626; --ink-600: #3F3F46;
-  --mist-400: #CACBCE; --mist-300: #E4E5E6;
-  --serif: 'Rethink Sans', system-ui, sans-serif; --sans: 'Manrope', system-ui, sans-serif;
-  --ease: cubic-bezier(.44, 0, .56, 1);
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; scroll-padding-top:130px; }
-body { font-family:var(--sans); background:var(--background); color:var(--foreground); line-height:1.7; font-size:16px; -webkit-font-smoothing:antialiased; }
-a { color:inherit; text-decoration:none; }
-::selection { background:var(--accent); color:var(--on-accent); }
-:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:4px; }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:100px; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #08080C;
+      color: #E8E8F0;
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: -1; opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; }
 
-/* ==== Header / Masthead (floating pill bar) ==== */
-.masthead { position:sticky; top:16px; z-index:100; width:calc(100% - 32px); max-width:760px; margin:24px auto 0; padding:12px 14px 12px 20px; display:flex; align-items:center; justify-content:space-between; gap:1rem; min-height:83px; border:1px solid var(--ink-700); border-radius:50px; background:rgba(15,15,15,.65); backdrop-filter:blur(100px); -webkit-backdrop-filter:blur(100px); }
-.brand img { height:46px; width:auto; display:block; }
-.brand a { text-decoration:none; }
-nav.top { display:flex; gap:.25rem; font-family:var(--serif); font-size:.92rem; color:var(--muted-fg); }
-nav.top a { font-weight:500; padding:.55rem .95rem; border-radius:68px; transition:color .3s var(--ease), background-color .3s var(--ease); }
-nav.top a:hover { color:#fff; background:var(--ink-700); }
-.wrap { max-width:760px; margin:0 auto; padding:3rem 1.2rem 4rem; }
-.kicker { display:inline-flex; align-items:center; font-family:var(--serif); font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:500; background:var(--card); border:1px solid var(--border); padding:.42rem .95rem; border-radius:42px; margin-bottom:1rem; }
-h1 { font-family:var(--serif); font-weight:700; font-size:clamp(1.95rem, 4.4vw, 2.5rem); line-height:1.14; margin-bottom:.8rem; letter-spacing:.005em; }
-.lede { font-size:1.12rem; line-height:1.65; color:var(--secondary); max-width:62ch; margin-bottom:1.3rem; }
-.meta { display:flex; align-items:center; gap:.9rem; font-size:.85rem; color:var(--muted-fg); padding:.85rem 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-bottom:2.2rem; }
-.meta .cat { color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:.05em; font-size:.75rem; }
-.meta .rt { margin-left:auto; display:flex; align-items:center; gap:.4rem; }
-h2 { font-family:var(--serif); font-weight:700; font-size:1.7rem; margin:2.5rem 0 .7rem; line-height:1.25; letter-spacing:.01em; }
-h3 { font-family:var(--serif); font-weight:700; font-size:1.22rem; margin:1.7rem 0 .5rem; }
-p { margin-bottom:1rem; color:var(--mist-400); max-width:68ch; }
-strong { color:var(--foreground); }
-ul { padding-left:1.3rem; margin:.6rem 0 1.1rem; }
-li { margin-bottom:.45rem; color:var(--mist-400); }
-.callout { background:var(--card); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:0 16px 16px 0; padding:1.3rem 1.4rem; margin:1.6rem 0; }
-.callout h3 { margin:0; font-size:.92rem; color:var(--accent); text-transform:uppercase; letter-spacing:.07em; font-family:var(--serif); font-weight:600; }
-.callout p { margin:.4rem 0 0; font-size:.98rem; }
-.content-img { width:100%; height:auto; border-radius:14px; margin:1.5rem 0 1.6rem; display:block; border:1px solid var(--border); box-shadow:0 24px 60px rgba(0,0,0,.5); }
-.figcaption { font-size:.8rem; color:var(--muted-fg); text-align:center; margin:-1rem 0 1.7rem; }
-.cta-box { position:relative; overflow:hidden; background:var(--card); border:1px solid var(--border); color:var(--foreground); border-radius:20px; padding:2.5rem 2rem; text-align:center; margin:2.8rem 0; }
-.cta-box::before { content:''; position:absolute; top:-70px; right:-50px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle, rgba(205,241,64,.18), transparent 70%); pointer-events:none; }
-.cta-box > * { position:relative; z-index:1; }
-.cta-box h2 { color:#F2F2F3; margin:0 0 .5rem; font-size:1.55rem; }
-.cta-box p { color:var(--secondary); margin:0 auto .8rem; max-width:48ch; }
-.btn { position:relative; display:inline-flex; align-items:center; justify-content:center; background:var(--accent); color:var(--on-accent); font-family:var(--serif); font-weight:600; font-size:1.02rem; padding:.9rem 1.85rem; border-radius:53px; overflow:hidden; transition:background-color .3s var(--ease), transform .3s var(--ease); }
-.btn:hover { background:var(--accent-soft); transform:translateY(-1px); }
-.btn:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
-.btn::after { content:''; position:absolute; top:-23px; bottom:-2px; left:-7px; width:5px; height:80px; background-image:linear-gradient(177deg, rgba(255,255,255,0) 8%, rgb(255,255,255) 84%); transform:rotate(30deg); pointer-events:none; }
-.btn:hover::after { animation:shine .85s var(--ease); }
-@keyframes shine { from { transform:rotate(30deg) translateX(0); } to { transform:rotate(30deg) translateX(260px); } }
-.cta-note { font-size:.8rem; color:var(--muted-fg); margin-top:.9rem; }
-details { background:var(--card); border:1px solid var(--border); border-radius:14px; margin:.6rem 0; overflow:hidden; transition:border-color .3s var(--ease); }
-details:hover { border-color:var(--ink-600); }
-summary { cursor:pointer; padding:1rem 1.15rem; font-family:var(--serif); font-weight:500; font-size:.98rem; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:1rem; color:var(--mist-300); }
-summary::-webkit-details-marker { display:none; }
-summary::after { content:'+'; flex:0 0 auto; width:34px; height:34px; border-radius:50%; background:var(--muted); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:1.15rem; line-height:1; transition:transform .3s var(--ease), background-color .3s var(--ease); }
-details[open] summary::after { transform:rotate(45deg); }
-details p { padding:0 1.2rem 1rem; margin:0; font-size:.95rem; color:var(--muted-fg); }
-.grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.2rem 0; }
-.card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.2rem; transition:border-color .3s var(--ease), transform .3s var(--ease); }
-.card:hover { border-color:var(--ink-600); transform:translateY(-3px); }
-.card b { display:block; margin-bottom:.2rem; }
-.card span { font-size:.88rem; color:var(--muted-fg); line-height:1.5; }
-footer { border-top:1px solid var(--border); margin-top:1rem; padding:1.8rem 1.2rem 2.4rem; text-align:center; color:var(--muted-fg); font-size:.83rem; }
-footer .brand { margin-bottom:.5rem; }
-footer a { color:var(--secondary); transition:color .3s var(--ease); }
-footer a:hover { color:var(--accent); }
-.internal-links { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.5rem 1.6rem; margin:2.2rem 0; }
-.internal-links h3 { margin-top:0; font-size:.95rem; color:var(--accent); text-transform:uppercase; letter-spacing:.07em; font-family:var(--serif); font-weight:600; }
-.internal-links ul { list-style:none; padding:0; margin:.7rem 0 0; }
-.internal-links li { margin-bottom:.4rem; }
-.internal-links a { color:var(--foreground); font-weight:500; transition:color .3s var(--ease); }
-.internal-links a:hover { color:var(--accent); }
-@media (max-width:640px) { h1 { font-size:1.85rem; } .grid { grid-template-columns:1fr; } nav.top { display:none; } .masthead { min-height:70px; padding:10px 12px 10px 16px; } }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } * { transition:none !important; animation:none !important; } }
-</style>
+    /* ---- Header / Nav ---- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,12,.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1C1C24;
+    }
+    .nav {
+      max-width: 860px; margin: 0 auto;
+      padding: .75rem 1.4rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: .5rem; }
+    .brand img { height: 42px; width: auto; display: block; border-radius: 50%; }
+    nav.links { display: flex; gap: 1.5rem; font-size: .85rem; font-weight: 500; color: #7A7A8A; }
+    nav.links a { position: relative; transition: color .2s; }
+    nav.links a:hover { color: #E8E8F0; }
+    nav.links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px; background: #FF3B30;
+      transition: width .25s ease;
+    }
+    nav.links a:hover::after { width: 100%; }
+
+    .wrap { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.2rem 3.5rem; }
+
+    /* ---- Article Elements ---- */
+    .kicker {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+      color: #FF453A; font-weight: 700;
+      background: rgba(255,69,58,.1);
+      border: 1px solid rgba(255,69,58,.25);
+      padding: .4rem .9rem; border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+    .kicker .skull-s { width: 14px; height: 14px; }
+    h1 {
+      font-weight: 800; font-size: clamp(1.8rem,4vw,2.4rem);
+      line-height: 1.1; margin-bottom: .8rem;
+      letter-spacing: -.02em;
+    }
+    .lede {
+      font-size: 1.05rem; color: #7A7A8A;
+      max-width: 62ch; margin-bottom: 1.2rem;
+      line-height: 1.65;
+    }
+    .meta {
+      display: flex; align-items: center; gap: .8rem;
+      font-size: .82rem; color: #5A5A6A;
+      padding: .8rem 0;
+      border-top: 1px solid #1C1C24;
+      border-bottom: 1px solid #1C1C24;
+      margin-bottom: 2rem;
+    }
+    .meta .cat { color: #FF453A; font-weight: 600; text-transform: uppercase; letter-spacing:.05em; font-size:.7rem; }
+    .meta .rt { margin-left: auto; display: flex; align-items: center; gap: .35rem; }
+
+    h2 {
+      font-weight: 700; font-size: 1.6rem;
+      line-height: 1.25; margin: 2.2rem 0 .6rem;
+      letter-spacing: -.01em;
+    }
+    h3 { font-weight: 700; font-size: 1.15rem; margin: 1.5rem 0 .4rem; }
+    p { margin-bottom: 1rem; color: #9A9AAA; max-width: 68ch; }
+    strong { color: #E8E8F0; }
+    ul { padding-left: 1.3rem; margin: .5rem 0 1rem; }
+    li { margin-bottom: .4rem; color: #8A8A9A; }
+
+    .callout {
+      background: #0E0E16; border: 1px solid #1C1C28;
+      border-left: 3px solid #FF3B30;
+      border-radius: 0 14px 14px 0;
+      padding: 1.2rem 1.3rem; margin: 1.5rem 0;
+    }
+    .callout h3 { margin:0; font-size:.85rem; color: #FF453A; text-transform:uppercase; letter-spacing:.07em; margin-bottom:.3rem; }
+    .callout p { margin: 0; font-size: .95rem; color: #9A9AAA; }
+    .callout strong { color: #E8E8F0; }
+
+    .content-img { width:100%; height:auto; border-radius:14px; margin:1.4rem 0 1.5rem; display:block; border:1px solid #1C1C28; box-shadow:0 20px 50px rgba(0,0,0,.5); }
+    .figcaption { font-size:.78rem; color:#5A5A6A; text-align:center; margin:-.9rem 0 1.5rem; }
+
+    blockquote { border-left:2px solid #FF3B30; padding:.2rem 0 .2rem 1rem; margin:1.5rem 0; color:#7A7A8A; font-size:1.05rem; font-style:italic; }
+
+    /* ---- Cards / Grid ---- */
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:.9rem; margin:1.2rem 0; }
+    .card {
+      background:#0E0E16; border:1px solid #1C1C28; border-radius:12px;
+      padding:1rem 1.1rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .card:hover { border-color:#FF3B30; transform:translateY(-3px); }
+    .card b { display:block; margin-bottom:.15rem; color:#E8E8F0; }
+    .card span { font-size:.85rem; color:#6A6A7A; line-height:1.5; }
+
+    /* ---- internal links ---- */
+    .internal-links { background:#0E0E16; border:1px solid #1C1C28; border-radius:14px; padding:1.3rem 1.4rem; margin:2rem 0; }
+    .internal-links h3 { margin-top:0; font-size:.85rem; color:#FF453A; text-transform:uppercase; letter-spacing:.07em; margin-bottom:.6rem; }
+    .internal-links ul { list-style:none; padding:0; margin:0; }
+    .internal-links li { margin-bottom:.35rem; }
+    .internal-links a { color:#C8C8D0; font-weight:500; transition:color .2s; }
+    .internal-links a:hover { color:#FF453A; }
+
+    /* ---- CTA box ---- */
+    .cta-box {
+      position:relative; overflow:hidden;
+      background:#0E0E16; border:1px solid #1C1C28; border-radius:16px;
+      padding:2.2rem 1.8rem; text-align:center; margin:2.5rem 0;
+    }
+    .cta-box::before {
+      content:''; position:absolute; top:-60px; right:-40px;
+      width:200px; height:200px; border-radius:50%;
+      background:rgba(255,59,48,.08);
+      pointer-events:none;
+    }
+    .cta-box > * { position:relative; z-index:1; }
+    .cta-box h2 { color:#E8E8F0; margin:0 0 .4rem; font-size:1.4rem; }
+    .cta-box p { color:#7A7A8A; margin:0 auto .7rem; max-width:46ch; }
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      background:#FF3B30; color:#fff;
+      font-weight:700; font-size:.95rem;
+      padding:.85rem 1.7rem; border-radius:10px;
+      transition:background .2s, transform .15s, box-shadow .2s;
+      box-shadow:0 4px 20px rgba(255,59,48,.3);
+    }
+    .btn:hover { background:#E5332A; transform:translateY(-2px); box-shadow:0 8px 28px rgba(255,59,48,.4); }
+    .cta-note { font-size:.8rem; color:#5A5A6A; margin-top:.8rem; }
+
+    /* ---- FAQ ---- */
+    details {
+      background:#0E0E16; border:1px solid #1C1C28; border-radius:10px;
+      margin:.5rem 0; overflow:hidden;
+      transition: border-color .2s;
+    }
+    details[open] { border-color:rgba(255,59,48,.3); }
+    summary {
+      cursor:pointer; padding:.9rem 1.1rem;
+      font-weight:600; font-size:.92rem;
+      list-style:none;
+      display:flex; justify-content:space-between; align-items:center; gap:1rem;
+      color:#E8E8F0;
+    }
+    summary::-webkit-details-marker { display:none; }
+    summary::after { content:'+'; font-size:1.2rem; color:#FF453A; transition:transform .25s; }
+    details[open] summary::after { transform:rotate(45deg); }
+    details p { padding:0 1.1rem 1rem; margin:0; font-size:.9rem; color:#6A6A7A; }
+
+    /* ---- Footer ---- */
+    footer {
+      border-top:1px solid #1C1C24; padding:1.8rem 1.2rem 2.2rem;
+      text-align:center; color:#5A5A6A; font-size:.8rem;
+    }
+    footer .brand { margin-bottom:.4rem; display:flex; align-items:center; justify-content:center; gap:.4rem; }
+    footer a { color:#7A7A8A; text-decoration:underline; transition:color .2s; }
+    footer a:hover { color:#FF453A; }
+
+    @media (max-width:640px) {
+      h1 { font-size:1.7rem; }
+      .wrap { padding-top:1.5rem; }
+      .grid { grid-template-columns:1fr; }
+      nav.links { display:none; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      html { scroll-behavior:auto; }
+      *,*::before,*::after { transition:none!important; animation:none!important; }
+    }
+  </style>
 </head>
 <body>
-
-<header class="masthead">
-  <div class="brand"><a href="/"><img src="/images/logo.png" alt="Trading Signals Logo"></a></div>
-  <nav class="top">
-    <a href="/#preise">Preise</a>
-    <a href="/erfahrungsbericht/">Erfahrungsbericht</a>
-  </nav>
+<header>
+  <div class="nav">
+    <div class="brand"><a href="/"><img src="/images/logo.jpg" alt="Trading Signals Logo"></a></div>
+    <nav class="links">
+      <a href="/">Home</a>
+      <a href="/ratgeber/">Ratgeber</a>
+      <a href="/erfahrungsbericht/">Erfahrungsbericht</a>
+    </nav>
+  </div>
 </header>
-
 <article class="wrap">
-  <div class="kicker">Ratgeber</div>
-  <h1>Bitcoin Signale – Einstiege, Stop-Loss & Take-Profit</h1>
-  <p class="lede">Bitcoin ist der liquide Markt im Krypto-Universum – und zugleich der volatilste. Wer Signale nutzt, braucht klare Regeln statt Bauchgefühl.</p>
+  <div class="kicker">
+    <svg class="skull-s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="10" r="6"/><path d="M8 14v-1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1"/><circle cx="10" cy="9" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="9" r="1" fill="currentColor" stroke="none"/></svg>
+    Ratgeber
+  </div>
+  <h1>Bitcoin Signale – Einstiege, Stop-Loss &amp; Take-Profit</h1>
+  <p class="lede">Bitcoin ist der liquideste Markt im Krypto-Universum – und zugleich der volatilste. Wer Signale nutzt, braucht klare Regeln statt Bauchgefühl.</p>
+
   <div class="meta">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF453A" stroke-width="1.5"><circle cx="12" cy="10" r="6"/><path d="M8 14v-1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1"/><circle cx="10" cy="9" r="1" fill="#FF453A" stroke="none"/><circle cx="14" cy="9" r="1" fill="#FF453A" stroke="none"/></svg>
     <span class="cat">Trading Signals</span>
-    <span>5 Min. Lesezeit</span>
-    <span class="rt"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Ratgeber</span>
+    <span>Lukas Berger</span>
+    <span class="rt"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 5 Min.</span>
   </div>
 
-  <img class="content-img" src="/images/bitcoin.jpg" alt="Bitcoin Signale mit Einstiegs- und Stop-Loss-Vorgaben" loading="lazy">
+  <img class="content-img" src="/images/bitcoin.jpg" alt="BTC-Signale mit klarer Risikovorgabe." loading="lazy">
   <p class="figcaption">BTC-Signale mit klarer Risikovorgabe.</p>
 
-  <div class="callout">
-    <h3>Kurz &amp; knapp</h3>
-    <p>Ein seriöses Signal ist mehr als ein Kurs: Es erklärt seine Logik und liefert Einstieg, Stop-Loss und Take-Profit. Genau das liefert der Trading Signals Bot – konsistent, ohne Emotionen, direkt in Telegram.</p>
-  </div>
+  <div class="callout"><h3>Kurz &amp; knapp</h3><p>Ein seriöses Signal ist mehr als ein Kurs: Es erklärt seine Logik und liefert Einstieg, Stop-Loss und Take-Profit. Genau das liefert der Trading Signals Bot – konsistent, ohne Emotionen, direkt in Telegram.</p></div>
 
-  
 <p>Bitcoin handelt mit starken Ausschlägen in beide Richtungen. Ein Signal ohne Stop-Loss ist deshalb kein Signal, sondern ein Risiko. Professionelle Trader setzen deshalb auf feste Regeln.</p>
 
 <p>Der <strong>Trading Signals Bot</strong> berechnet für jedes Bitcoin-Signal den <strong>ATR-basierten Stop-Loss und Take-Profit</strong> automatisch – abgestimmt auf die aktuelle Volatilität des Marktes.</p>
 
 <h2>Welche Indikatoren zählen bei BTC?</h2>
-<p>RSI erkennt überkaufte und überverkaufte Phasen (wichtig bei starken Bewegungen). EMA 20/50 zeigt, ob der kurzfristige Trend zum langfristigen passt. MACD bestätigt Wendepunkte. Die Kombination dieser Signale reduziert Fehlsignale gegenüber Einzelkennzahlen deutlich.</p>
+<p>RSI erkennt überkaufte und überverkaufte Phasen. EMA 20/50 zeigt, ob der kurzfristige Trend zum langfristigen passt. MACD bestätigt Wendepunkte. Die Kombination dieser Signale reduziert Fehlsignale deutlich.</p>
 
 <h2>Volatilität als Chance</h2>
-<p>Hohe Volatilität bedeutet Chancen – aber auch das Risiko von Fehleinstiegen. Nehme den Confi­dence-Score als Orientierung und passe die Positionsgrösse dem eigenen Risiko an.</p>
+<p>Hohe Volatilität bedeutet Chancen – aber auch das Risiko von Fehleinstiegen. Nutze den Confidence-Score als Orientierung und passe die Positionsgrösse dem eigenen Risiko an.</p>
 
+<div class="internal-links">
+<h3>Mehr erfahren</h3>
+<ul>
+<li><a href="/">Trading Signals – Startseite</a></li>
+<li><a href="/erfahrungsbericht/">Ehrlicher Erfahrungsbericht</a></li>
+<li><a href="/krypto-signale-telegram/">Krypto Signale auf Telegram</a></li>
+<li><a href="/aktien-signale/">Aktien Signale</a></li>
+<li><a href="/gold-signale/">Gold Signale</a></li>
+</ul>
+</div>
 
-  <div class="internal-links">
-    <h3>Mehr erfahren</h3>
-    <ul>
-      <li><a href="/">Trading Signals – Startseite</a></li>
-      <li><a href="/erfahrungsbericht/">Ehrlicher Erfahrungsbericht</a></li>
-      <li><a href="/krypto-signale-telegram/">Krypto Signale auf Telegram</a></li>
-      <li><a href="/bitcoin-signale/">Bitcoin Signale</a></li>
-      <li><a href="/aktien-signale/">Aktien Signale</a></li>
-      <li><a href="/gold-signale/">Gold Signale</a></li>
-    </ul>
-  </div>
-
-  <h2>Häufige Fragen</h2>
-  <details><summary>Was ist ein gutes Bitcoin-Signal?</summary><p>Ein Signal mit klarem Einstieg, Stop-Loss und Take-Profit – unabhängig von der kurzfristigen Laune eines Kanals.</p></details>
+<h2>Häufige Fragen</h2>
+<details><summary>Was ist ein gutes Bitcoin-Signal?</summary><p>Ein Signal mit klarem Einstieg, Stop-Loss und Take-Profit – unabhängig von der kurzfristigen Laune eines Kanals.</p></details>
 <details><summary>Warum ist der Stop-Loss wichtig?</summary><p>Er begrenzt dein Verlustrisiko automatisch, selbst wenn du den Chart gerade nicht beobachtest.</p></details>
 <details><summary>Wie berechne ich den richtigen Stop?</summary><p>Ein verbreiteter Ansatz nutzt den ATR-Indikator, der die aktuelle Marktvolatilität misst – genau das macht der Bot automatisch.</p></details>
 
@@ -162,18 +271,19 @@ footer a:hover { color:var(--accent); }
     <p class="cta-note">Keine Vorkenntnisse nötig · jederzeit kündbar</p>
   </div>
 </article>
-
 <footer>
-  <div class="brand"><a href="/"><img src="/images/logo.png" alt="Trading Signals Logo"></a></div>
-  <p>Keine Finanzberatung – Handel immer auf eigene Verantwortung. · <a href="/">Startseite</a> · <a href="/erfahrungsbericht/">Erfahrungsbericht</a></p>
+  <div class="brand">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF453A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="6"/><path d="M8 14v-1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1"/><circle cx="10" cy="9" r="1" fill="#FF453A" stroke="none"/><circle cx="14" cy="9" r="1" fill="#FF453A" stroke="none"/></svg>
+    Trading Signals
+  </div>
+  <p>Keine Finanzberatung – Handel immer auf eigene Verantwortung. · <a href="/erfahrungsbericht/">Erfahrungsbericht</a> · <a href="/ratgeber/">Ratgeber</a></p>
 </footer>
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Bitcoin Signale – Einstiege, Stop-Loss & Take-Profit",
-  "description": "Bitcoin Signale richtig lesen und handeln: Einstieg, Stop-Loss und Take-Profit anhand von RSI, EMA und MACD. Automatische BTC-Signale auf Telegram.",
+  "headline": "Bitcoin Signale – Einstiege, Stop-Loss &amp; Take-Profit",
+  "description": "Bitcoin Signale richtig lesen und handeln: Einstieg, Stop-Loss und Take-Profit anhand von RSI, EMA und MACD.",
   "datePublished": "2026-09-28",
   "inLanguage": "de-CH",
   "author": { "@type": "Person", "name": "Lukas Berger" },

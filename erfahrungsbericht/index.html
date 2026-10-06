@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08080C">
   <title>Trading Signals Erfahrungsbericht – KI-Trading-Bot auf Telegram im Test</title>
   <meta name="description" content="Mein ehrlicher Erfahrungsbericht über den Trading Signals Bot: Krypto, Aktien & Gold Signale auf Telegram. Funktionen, Preis, Vor- & Nachteile und mein Fazit.">
   <meta property="og:title" content="Trading Signals Erfahrungsbericht">
@@ -11,185 +12,228 @@
   <meta property="og:locale" content="de_CH">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="/images/favicon.png">
-  <link rel="apple-touch-icon" href="/images/logo.png">
+  <link rel="apple-touch-icon" href="/images/logo.jpg">
   <link rel="canonical" href="https://crypto-signale.pw/erfahrungsbericht/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    /* Outstand design system: ink surfaces, lime accent, Rethink Sans / Manrope */
-    :root {
-      --primary: #141414;
-      --on-primary: #F2F2F3;
-      --secondary: #B0B1B5;
-      --accent: #CDF140;
-      --on-accent: #0F0F0F;
-      --background: #0F0F0F;
-      --foreground: #F2F2F3;
-      --card: #141414;
-      --card-fg: #F2F2F3;
-      --muted: #1A1A1A;
-      --muted-fg: #96979C;
-      --border: #1F1F1F;
-      --ring: #3F3F46;
-      --accent-soft: #D4F458;
-      --ink-700: #262626;
-      --ink-600: #3F3F46;
-      --mist-400: #CACBCE;
-      --mist-300: #E4E5E6;
-      --serif: 'Rethink Sans', system-ui, -apple-system, sans-serif;
-      --sans: 'Manrope', system-ui, -apple-system, sans-serif;
-      --ease: cubic-bezier(.44, 0, .56, 1);
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:100px; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #08080C;
+      color: #E8E8F0;
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior:smooth; scroll-padding-top:130px; }
-    body { font-family:var(--sans); background:var(--background); color:var(--foreground); line-height:1.7; font-size:16px; -webkit-font-smoothing:antialiased; }
-    a { color:inherit; }
-    ::selection { background:var(--accent); color:var(--on-accent); }
-    :focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:4px; }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: -1; opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; }
 
-    /* ==== Progress bar (reading) ==== */
-    #progress { position:fixed; top:0; left:0; height:3px; width:0; background:var(--accent); z-index:1000; }
+    /* ---- Header / Nav ---- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,12,.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1C1C24;
+    }
+    .nav {
+      max-width: 860px; margin: 0 auto;
+      padding: .75rem 1.4rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: .5rem; }
+    .brand img { height: 42px; width: auto; display: block; border-radius: 50%; }
+    nav.links { display: flex; gap: 1.5rem; font-size: .85rem; font-weight: 500; color: #7A7A8A; }
+    nav.links a { position: relative; transition: color .2s; }
+    nav.links a:hover { color: #E8E8F0; }
+    nav.links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px; background: #FF3B30;
+      transition: width .25s ease;
+    }
+    nav.links a:hover::after { width: 100%; }
 
-    /* ==== Header / Masthead (floating pill bar) ==== */
-    .masthead { position:sticky; top:16px; z-index:100; width:calc(100% - 32px); max-width:760px; margin:24px auto 0; padding:12px 14px 12px 20px; display:flex; align-items:center; justify-content:space-between; gap:1rem; min-height:83px; border:1px solid var(--ink-700); border-radius:50px; background:rgba(15,15,15,.65); backdrop-filter:blur(100px); -webkit-backdrop-filter:blur(100px); }
-    .brand img { height:46px; width:auto; display:block; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.2rem 3.5rem; }
 
-    nav.top { display:flex; gap:.25rem; font-family:var(--serif); font-size:.92rem; color:var(--muted-fg); }
-    nav.top a { text-decoration:none; font-weight:500; padding:.55rem .95rem; border-radius:68px; transition:color .3s var(--ease), background-color .3s var(--ease); }
-    nav.top a:hover { color:#fff; background:var(--ink-700); }
+    /* ---- Article Elements ---- */
+    .kicker {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+      color: #FF453A; font-weight: 700;
+      background: rgba(255,69,58,.1);
+      border: 1px solid rgba(255,69,58,.25);
+      padding: .4rem .9rem; border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+    .kicker .skull-s { width: 14px; height: 14px; }
+    h1 {
+      font-weight: 800; font-size: clamp(1.8rem,4vw,2.4rem);
+      line-height: 1.1; margin-bottom: .8rem;
+      letter-spacing: -.02em;
+    }
+    .lede {
+      font-size: 1.05rem; color: #7A7A8A;
+      max-width: 62ch; margin-bottom: 1.2rem;
+      line-height: 1.65;
+    }
+    .meta {
+      display: flex; align-items: center; gap: .8rem;
+      font-size: .82rem; color: #5A5A6A;
+      padding: .8rem 0;
+      border-top: 1px solid #1C1C24;
+      border-bottom: 1px solid #1C1C24;
+      margin-bottom: 2rem;
+    }
+    .meta .cat { color: #FF453A; font-weight: 600; text-transform: uppercase; letter-spacing:.05em; font-size:.7rem; }
+    .meta .rt { margin-left: auto; display: flex; align-items: center; gap: .35rem; }
 
-    /* ==== Article ==== */
-    .wrap { max-width:760px; margin:0 auto; padding:3rem 1.2rem 4rem; }
+    h2 {
+      font-weight: 700; font-size: 1.6rem;
+      line-height: 1.25; margin: 2.2rem 0 .6rem;
+      letter-spacing: -.01em;
+    }
+    h3 { font-weight: 700; font-size: 1.15rem; margin: 1.5rem 0 .4rem; }
+    p { margin-bottom: 1rem; color: #9A9AAA; max-width: 68ch; }
+    strong { color: #E8E8F0; }
+    ul { padding-left: 1.3rem; margin: .5rem 0 1rem; }
+    li { margin-bottom: .4rem; color: #8A8A9A; }
 
-    .kicker { display:inline-flex; align-items:center; font-family:var(--serif); font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:500; background:var(--card); border:1px solid var(--border); padding:.42rem .95rem; border-radius:42px; margin-bottom:1rem; }
-    h1 { font-family:var(--serif); font-weight:700; font-size:clamp(1.95rem, 4.4vw, 2.5rem); line-height:1.14; color:var(--foreground); margin-bottom:.9rem; letter-spacing:.005em; }
-    .lede { font-size:1.15rem; line-height:1.65; color:var(--secondary); max-width:60ch; margin-bottom:1.5rem; }
-    .meta { display:flex; align-items:center; gap:.9rem; font-size:.85rem; color:var(--muted-fg); padding:.9rem 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin-bottom:2.2rem; }
-    .avatar { width:46px; height:46px; border-radius:50%; background:var(--muted); border:1px solid var(--border); color:var(--accent); display:flex; align-items:center; justify-content:center; font-weight:700; font-family:var(--serif); overflow:hidden; flex-shrink:0; }
-    .avatar img { width:100%; height:100%; object-fit:cover; display:block; }
-    .author b { color:var(--foreground); display:block; font-size:.9rem; font-family:var(--serif); }
-    .author span { font-size:.8rem; }
-    .meta .readtime { margin-left:auto; display:flex; align-items:center; gap:.4rem; }
+    .callout {
+      background: #0E0E16; border: 1px solid #1C1C28;
+      border-left: 3px solid #FF3B30;
+      border-radius: 0 14px 14px 0;
+      padding: 1.2rem 1.3rem; margin: 1.5rem 0;
+    }
+    .callout h3 { margin:0; font-size:.85rem; color: #FF453A; text-transform:uppercase; letter-spacing:.07em; margin-bottom:.3rem; }
+    .callout p { margin: 0; font-size: .95rem; color: #9A9AAA; }
+    .callout strong { color: #E8E8F0; }
 
-    h2 { font-family:var(--serif); font-weight:700; font-size:1.7rem; margin:2.5rem 0 .7rem; line-height:1.25; letter-spacing:.01em; }
-    h3 { font-family:var(--serif); font-weight:700; font-size:1.22rem; margin:1.7rem 0 .5rem; }
-    p { margin-bottom:1.1rem; color:var(--mist-400); max-width:65ch; }
-    strong { color:var(--foreground); }
+    .content-img { width:100%; height:auto; border-radius:14px; margin:1.4rem 0 1.5rem; display:block; border:1px solid #1C1C28; box-shadow:0 20px 50px rgba(0,0,0,.5); }
+    .figcaption { font-size:.78rem; color:#5A5A6A; text-align:center; margin:-.9rem 0 1.5rem; }
 
-    ul { padding-left:1.3rem; margin:.7rem 0 1.2rem; }
-    li { margin-bottom:.45rem; color:var(--mist-400); }
-    li strong { color:var(--foreground); }
+    blockquote { border-left:2px solid #FF3B30; padding:.2rem 0 .2rem 1rem; margin:1.5rem 0; color:#7A7A8A; font-size:1.05rem; font-style:italic; }
 
-    .dropcap::first-letter { float:left; font-family:var(--serif); font-size:3.6rem; line-height:.85; padding:.08em .12em 0 0; color:var(--accent); font-weight:800; }
+    /* ---- Cards / Grid ---- */
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:.9rem; margin:1.2rem 0; }
+    .card {
+      background:#0E0E16; border:1px solid #1C1C28; border-radius:12px;
+      padding:1rem 1.1rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .card:hover { border-color:#FF3B30; transform:translateY(-3px); }
+    .card b { display:block; margin-bottom:.15rem; color:#E8E8F0; }
+    .card span { font-size:.85rem; color:#6A6A7A; line-height:1.5; }
 
-    /* ==== Inline callout / summary ==== */
-    .callout { background:var(--card); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:0 16px 16px 0; padding:1.3rem 1.4rem; margin:1.6rem 0; }
-    .callout h3 { margin-top:0; font-size:.92rem; color:var(--accent); font-family:var(--serif); font-weight:600; text-transform:uppercase; letter-spacing:.07em; }
-    .callout p { margin:0; font-size:.98rem; }
+    /* ---- internal links ---- */
+    .internal-links { background:#0E0E16; border:1px solid #1C1C28; border-radius:14px; padding:1.3rem 1.4rem; margin:2rem 0; }
+    .internal-links h3 { margin-top:0; font-size:.85rem; color:#FF453A; text-transform:uppercase; letter-spacing:.07em; margin-bottom:.6rem; }
+    .internal-links ul { list-style:none; padding:0; margin:0; }
+    .internal-links li { margin-bottom:.35rem; }
+    .internal-links a { color:#C8C8D0; font-weight:500; transition:color .2s; }
+    .internal-links a:hover { color:#FF453A; }
 
-    blockquote { border-left:2px solid var(--accent); padding:.2rem 0 .2rem 1.2rem; margin:1.6rem 0; color:var(--secondary); font-family:var(--serif); font-size:1.1rem; font-style:italic; }
-
-    /* ==== Hero image ==== */
-    .hero-img, .content-img { width:100%; height:auto; border-radius:14px; margin:1.6rem 0 1.8rem; display:block; border:1px solid var(--border); box-shadow:0 24px 60px rgba(0,0,0,.5); }
-    .figcaption { font-size:.8rem; color:var(--muted-fg); text-align:center; margin:-1.2rem 0 1.8rem; }
-
-    /* ==== Feature list (2-col) ==== */
-    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.2rem 0 1.5rem; }
-    .feature { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.1rem 1.2rem; display:flex; gap:.8rem; align-items:flex-start; transition:border-color .3s var(--ease), transform .3s var(--ease); }
-    .feature:hover { border-color:var(--ink-600); transform:translateY(-3px); }
-    .feature svg { flex-shrink:0; margin-top:2px; color:var(--accent); }
-    .feature b { display:block; font-size:.95rem; margin-bottom:.15rem; font-family:var(--serif); }
-    .feature span { font-size:.85rem; color:var(--muted-fg); line-height:1.5; }
-
-    /* ==== Comparison table ==== */
-    .table-wrap { overflow-x:auto; margin:1.3rem 0 1.6rem; border:1px solid var(--border); border-radius:14px; background:var(--card); }
-    table { width:100%; border-collapse:collapse; font-size:.9rem; min-width:420px; }
-    th, td { text-align:left; padding:.8rem 1rem; border-bottom:1px solid var(--border); }
-    th { font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted-fg); background:var(--muted); font-family:var(--serif); }
-    tr:last-child td { border-bottom:none; }
-    td b { color:var(--accent); }
-
-    /* ==== CTA box ==== */
-    .cta-box { position:relative; overflow:hidden; background:var(--card); border:1px solid var(--border); color:var(--foreground); border-radius:20px; padding:2.5rem 2rem; text-align:center; margin:2.8rem 0; }
-    .cta-box::before { content:''; position:absolute; top:-70px; right:-50px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle, rgba(205,241,64,.18), transparent 70%); pointer-events:none; }
+    /* ---- CTA box ---- */
+    .cta-box {
+      position:relative; overflow:hidden;
+      background:#0E0E16; border:1px solid #1C1C28; border-radius:16px;
+      padding:2.2rem 1.8rem; text-align:center; margin:2.5rem 0;
+    }
+    .cta-box::before {
+      content:''; position:absolute; top:-60px; right:-40px;
+      width:200px; height:200px; border-radius:50%;
+      background:rgba(255,59,48,.08);
+      pointer-events:none;
+    }
     .cta-box > * { position:relative; z-index:1; }
-    .cta-box h2 { color:#F2F2F3; margin:0 0 .5rem; font-size:1.55rem; }
-    .cta-box p { color:var(--secondary); margin:0 auto .8rem; max-width:46ch; }
-    .cta-box ul { list-style:none; padding:0; margin:.9rem 0 1.4rem; display:inline-block; text-align:left; }
-    .cta-box li { color:var(--mist-300); margin-bottom:.4rem; }
-    .btn { position:relative; display:inline-flex; align-items:center; justify-content:center; background:var(--accent); color:var(--on-accent); font-family:var(--serif); font-weight:600; font-size:1.02rem; padding:.95rem 1.85rem; border-radius:53px; text-decoration:none; overflow:hidden; transition:background-color .3s var(--ease), transform .3s var(--ease); }
-    .btn:hover { background:var(--accent-soft); transform:translateY(-1px); }
-    .btn:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
-    .btn::after { content:''; position:absolute; top:-23px; bottom:-2px; left:-7px; width:5px; height:80px; background-image:linear-gradient(177deg, rgba(255,255,255,0) 8%, rgb(255,255,255) 84%); transform:rotate(30deg); pointer-events:none; }
-    .btn:hover::after { animation:shine .85s var(--ease); }
-    @keyframes shine { from { transform:rotate(30deg) translateX(0); } to { transform:rotate(30deg) translateX(260px); } }
-    .cta-note { font-size:.8rem; color:var(--muted-fg); margin-top:.9rem; }
-
-    /* ==== FAQ ==== */
-    details { background:var(--card); border:1px solid var(--border); border-radius:14px; margin:.6rem 0; overflow:hidden; transition:border-color .3s var(--ease); }
-    summary { cursor:pointer; padding:1rem 1.15rem; font-family:var(--serif); font-weight:500; font-size:.98rem; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:1rem; color:var(--mist-300); }
-    summary::-webkit-details-marker { display:none; }
-    summary::after { content:'+'; flex:0 0 auto; width:34px; height:34px; border-radius:50%; background:var(--muted); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:1.15rem; font-weight:500; line-height:1; transition:transform .3s var(--ease), background-color .3s var(--ease); font-family:var(--sans); }
-    details[open] summary::after { transform:rotate(45deg); }
-    details p { padding:0 1.2rem 1.1rem; margin:0; font-size:.95rem; color:var(--muted-fg); }
-    details:focus-within, details:hover { border-color:var(--ring); }
-
-    /* ==== Footer ==== */
-    footer { border-top:1px solid var(--border); margin-top:1rem; padding:1.9rem 1.2rem 2.5rem; text-align:center; color:var(--muted-fg); font-size:.83rem; }
-    footer .brand { display:flex; justify-content:center; margin-bottom:.5rem; }
-    footer a { color:var(--secondary); transition:color .3s var(--ease); }
-    footer a:hover { color:var(--accent); }
-    .brand a { text-decoration:none; }
-
-    /* ==== Responsive ==== */
-    @media (max-width:640px) {
-      .wrap { padding-top:2rem; }
-      h1 { font-size:1.9rem; }
-      .feature-grid { grid-template-columns:1fr; }
-      .lede { font-size:1.05rem; }
-      nav.top { display:none; }
-      .masthead { min-height:70px; padding:10px 12px 10px 16px; }
+    .cta-box h2 { color:#E8E8F0; margin:0 0 .4rem; font-size:1.4rem; }
+    .cta-box p { color:#7A7A8A; margin:0 auto .7rem; max-width:46ch; }
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      background:#FF3B30; color:#fff;
+      font-weight:700; font-size:.95rem;
+      padding:.85rem 1.7rem; border-radius:10px;
+      transition:background .2s, transform .15s, box-shadow .2s;
+      box-shadow:0 4px 20px rgba(255,59,48,.3);
     }
+    .btn:hover { background:#E5332A; transform:translateY(-2px); box-shadow:0 8px 28px rgba(255,59,48,.4); }
+    .cta-note { font-size:.8rem; color:#5A5A6A; margin-top:.8rem; }
 
-    @media (prefers-reduced-motion: reduce) {
+    /* ---- FAQ ---- */
+    details {
+      background:#0E0E16; border:1px solid #1C1C28; border-radius:10px;
+      margin:.5rem 0; overflow:hidden;
+      transition: border-color .2s;
+    }
+    details[open] { border-color:rgba(255,59,48,.3); }
+    summary {
+      cursor:pointer; padding:.9rem 1.1rem;
+      font-weight:600; font-size:.92rem;
+      list-style:none;
+      display:flex; justify-content:space-between; align-items:center; gap:1rem;
+      color:#E8E8F0;
+    }
+    summary::-webkit-details-marker { display:none; }
+    summary::after { content:'+'; font-size:1.2rem; color:#FF453A; transition:transform .25s; }
+    details[open] summary::after { transform:rotate(45deg); }
+    details p { padding:0 1.1rem 1rem; margin:0; font-size:.9rem; color:#6A6A7A; }
+
+    /* ---- Footer ---- */
+    footer {
+      border-top:1px solid #1C1C24; padding:1.8rem 1.2rem 2.2rem;
+      text-align:center; color:#5A5A6A; font-size:.8rem;
+    }
+    footer .brand { margin-bottom:.4rem; display:flex; align-items:center; justify-content:center; gap:.4rem; }
+    footer a { color:#7A7A8A; text-decoration:underline; transition:color .2s; }
+    footer a:hover { color:#FF453A; }
+
+    @media (max-width:640px) {
+      h1 { font-size:1.7rem; }
+      .wrap { padding-top:1.5rem; }
+      .grid { grid-template-columns:1fr; }
+      nav.links { display:none; }
+    }
+    @media (prefers-reduced-motion:reduce) {
       html { scroll-behavior:auto; }
-      * { transition:none !important; animation:none !important; }
+      *,*::before,*::after { transition:none!important; animation:none!important; }
     }
   </style>
 </head>
 <body>
-
-<div id="progress"></div>
-
-<header class="masthead">
-  <div class="brand"><a href="/"><img src="/images/logo.png" alt="Trading Signals Logo"></a></div>
-  <nav class="top">
-    <a href="/">Startseite</a>
-    <a href="/ratgeber/">Ratgeber</a>
-    <a href="/#preise">Preise</a>
-  </nav>
+<header>
+  <div class="nav">
+    <div class="brand"><a href="/"><img src="/images/logo.jpg" alt="Trading Signals Logo"></a></div>
+    <nav class="links">
+      <a href="/">Home</a>
+      <a href="/ratgeber/">Ratgeber</a>
+      <a href="/erfahrungsbericht/">Erfahrungsbericht</a>
+    </nav>
+  </div>
 </header>
-
 <article class="wrap">
-
-  <div class="kicker">Erfahrungsbericht · Testbericht</div>
+  <div class="kicker">
+    <svg class="skull-s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="10" r="6"/><path d="M8 14v-1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1"/><circle cx="10" cy="9" r="1" fill="currentColor" stroke="none"/><circle cx="14" cy="9" r="1" fill="currentColor" stroke="none"/></svg>
+    Erfahrungsbericht · Testbericht
+  </div>
   <h1>Der Trading Signals Bot – Mein ehrlicher Erfahrungsbericht</h1>
   <p class="lede">Krypto, Aktien und Gold-Signale direkt auf Telegram. Ich habe den Bot im Praxisbetrieb getestet – hier sind Funktionen, Preise, Schwächen und mein Fazit.</p>
 
-  <img class="hero-img" src="/images/crypto-charts.jpg" alt="Crypto-Trading-Charts auf einem Bildschirm – Trading Signals Telegram Bot Signale" loading="eager">
+  <img class="content-img" src="/images/crypto-charts.jpg" alt="Crypto-Trading-Charts auf einem Bildschirm – Trading Signals Telegram Bot Signale" loading="eager">
   <p class="figcaption">Trading-Signale live – der Bot analysiert Charts automatisch auf Telegram.</p>
 
   <div class="meta">
-    <div class="avatar"><img src="/images/lukas-berger.jpg" alt="Profilbild von Lukas Berger, Autor des Erfahrungsberichts"></div>
-    <div class="author">
-      <b>Lukas Berger</b>
-      <span>Online-Marketing &amp; Tool-Tests</span>
-    </div>
-    <div class="readtime">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      ~6 Min. Lesezeit
-    </div>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF453A" stroke-width="1.5"><circle cx="12" cy="10" r="6"/><path d="M8 14v-1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1"/><circle cx="10" cy="9" r="1" fill="#FF453A" stroke="none"/><circle cx="14" cy="9" r="1" fill="#FF453A" stroke="none"/></svg>
+    <span class="cat">Trading Signals</span>
+    <span>Lukas Berger</span>
+    <span class="rt"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ~6 Min.</span>
   </div>
 
   <div class="callout">
@@ -198,33 +242,18 @@
   </div>
 
   <h2>Warum ich überhaupt einen Trading-Bot testete</h2>
-  <p class="dropcap">Den Chart dauerhaft zu beobachten ist weder realistisch noch gesund. Ich habe Gelegenheiten verpasst, weil ich beruflich unterwegs war, und Entscheidungen aus dem Bauch heraus getroffen, statt auf Daten zu vertrauen. Genau für dieses Problem soll der Trading Signals Bot die Lösung sein: Er analysiert die Märkte automatisch und schickt dir klare Signale direkt in den Telegram-Chat – mit Einstieg, Stop-Loss und Take-Profit.</p>
+  <p>Den Chart dauerhaft zu beobachten ist weder realistisch noch gesund. Ich habe Gelegenheiten verpasst, weil ich beruflich unterwegs war, und Entscheidungen aus dem Bauch heraus getroffen, statt auf Daten zu vertrauen. Genau für dieses Problem soll der Trading Signals Bot die Lösung sein: Er analysiert die Märkte automatisch und schickt dir klare Signale direkt in den Telegram-Chat – mit Einstieg, Stop-Loss und Take-Profit.</p>
 
   <h2 id="funktionen">Die Analyse dahinter</h2>
   <p>Der Roboter kombiniert fünf etablierte Indikatoren, um die Signalqualität zu erhöhen. Kein einzelner Indikator entscheidet – das Zusammenspiel macht den Unterschied:</p>
 
-  <div class="feature-grid">
-    <div class="feature">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
-      <div><b>RSI (14)</b><span>Erkennt überkaufte &amp; überverkaufte Zonen.</span></div>
-    </div>
-    <div class="feature">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-      <div><b>EMA (20/50)</b><span>Zeigt Trendrichtung und Momentum.</span></div>
-    </div>
-    <div class="feature">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg>
-      <div><b>MACD (12/26/9)</b><span>Signalisiert Trendwechsel früh.</span></div>
-    </div>
-    <div class="feature">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M5 5h14v14H5z"/></svg>
-      <div><b>ATR (14)</b><span>Liefert präzise SL/TP-Abstände.</span></div>
-    </div>
+  <div class="grid">
+    <div class="card"><b>RSI (14)</b><span>Erkennt überkaufte &amp; überverkaufte Zonen.</span></div>
+    <div class="card"><b>EMA (20/50)</b><span>Zeigt Trendrichtung und Momentum.</span></div>
+    <div class="card"><b>MACD (12/26/9)</b><span>Signalisiert Trendwechsel früh.</span></div>
+    <div class="card"><b>ATR (14)</b><span>Liefert präzise SL/TP-Abstände.</span></div>
   </div>
-  <p>Dazu kommt ein <strong>Confidence-Score</strong>, der die Entscheidungssicherheit jedes Signals bewertet, und die <strong>Trendstärke-Analyse</strong> mit Volume-Bestätigung. Du siehst auf einen Blick, wie stark ein Signal wirklich ist – statt dir jede einzelne Kerze selbst anzuschauen.</p>
-
-  <img class="content-img" src="/images/trading-charts.jpg" alt="Aktien- und Trading-Charts – Analyse des Trading Signals Bots" loading="lazy">
-  <p class="figcaption">Aktien- &amp; Krypto-Analyse: 5 Indikatoren kombiniert zu einem Confidence-Score.</p>
+  <p>Dazu kommt ein <strong>Confidence-Score</strong>, der die Entscheidungssicherheit jedes Signals bewertet, und die <strong>Trendstärke-Analyse</strong> mit Volume-Bestätigung.</p>
 
   <h2>Welche Märkte werden abgedeckt?</h2>
   <ul>
@@ -232,56 +261,29 @@
     <li><strong>Aktien &amp; Stocks</strong> (Yahoo Finance)</li>
     <li><strong>Gold</strong> &amp; Edelmetalle</li>
   </ul>
-  <img class="content-img" src="/images/gold-bars.jpg" alt="Goldbarren – Gold Trading Signale vom Trading Signals Bot" loading="lazy">
-  <p class="figcaption">Auch Gold &amp; Edelmetalle werden vom Bot abgedeckt.</p>
-  <p>Alles ist nach Kategorie sortiert. Über die Befehle <strong>/crypto</strong>, <strong>/stocks</strong> und <strong>/gold</strong> siehst du nur die Signale, die dich tatsächlich interessieren – kein Rauschen, keine Relevanz-Verluste.</p>
-
-  <h3>Warum Telegram?</h3>
-  <p>Keine App-Installation, kein Dashboard, kein Login. Der Bot chattet direkt mit dir und schickt Alerts in Echtzeit – auf dem Handy, unterwegs, überall. Für jemanden, der nicht den ganzen Tag vor dem Rechner sitzt, ist das der entscheidende Vorteil.</p>
-
-  <blockquote>Am überzeugendsten war der Moment, als ich am Morgen ein fertiges Signal mit klarer Einstiegs-, SL- und TP-Vorgabe im Chat hatte – ohne dass ich auch nur einmal auf den Chart geschaut hatte.</blockquote>
 
   <h2 id="preise">Preise &amp; Testphase</h2>
-  <p>Das Preis-Modell ist transparent und unkompliziert:</p>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Merkmal</th><th>Premium</th></tr></thead>
-      <tbody>
-        <tr><td>Preis</td><td><b>69 USD / Jahr</b></td></tr>
-        <tr><td>Testphase</td><td><b>7 Tage kostenlos</b></td></tr>
-        <tr><td>Signale</td><td>Unbegrenzt (alle Timeframes)</td></tr>
-        <tr><td>Alerts</td><td>Automatisch bei neuen Signalen</td></tr>
-        <tr><td>Zahlung</td><td>Karte &amp; Krypto (OxaPay) · Karte (Gumroad)</td></tr>
-        <tr><td>Kündigung</td><td>Jederzeit, kein Auto-Renewal</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <p>Das Preis-Modell ist transparent und unkompliziert: <strong>69 USD / Jahr</strong> für Premium, <strong>7 Tage kostenlos testen</strong>, jederzeit kündbar. Zahlung per Karte oder Krypto (OxaPay) oder Karte (Gumroad).</p>
 
   <div class="cta-box">
     <h2>Bereit? Teste den Bot 7 Tage kostenlos</h2>
     <p>Alle Funktionen, unbegrenzte Signale – monatlich kündbar, keine versteckten Kosten.</p>
-    <ul>
-      <li>✓ Unbegrenzte Signale (alle Timeframes)</li>
-      <li>✓ SL/TP-Berechnung mit ATR-Präzision</li>
-      <li>✓ Volume-Bestätigung &amp; Confidence-Score</li>
-    </ul>
     <a class="btn" href="https://t.me/cryptoalertbot225bot" target="_blank" rel="noopener noreferrer">Trading Bot auf Telegram starten</a>
     <p class="cta-note">Direkt im Telegram-Chat – keine Installation nötig.</p>
   </div>
 
   <h2>Vor- &amp; Nachteile: Die ehrliche Bilanz</h2>
-  <p><strong>Dafür spricht:</strong> datenbasierte Signale statt Bauchgefühl, klare Riskovorgaben, einfache Nutzung direkt in Telegram, faire Testphase.</p>
-  <p><strong>Einschränkung:</strong> Kein System ist 100 % genau. Der Bot liefert Werkzeuge – Entscheidung und Risikomanagement bleiben bei dir. Wer blind jeder Empfehlung folgt, trabt auf eigenes Risiko. Das sollte bei jedem Trading-Tool klar sein.</p>
+  <p><strong>Dafür spricht:</strong> datenbasierte Signale statt Bauchgefühl, klare Risikovorgaben, einfache Nutzung direkt in Telegram, faire Testphase.</p>
+  <p><strong>Einschränkung:</strong> Kein System ist 100 % genau. Der Bot liefert Werkzeuge – Entscheidung und Risikomanagement bleiben bei dir.</p>
 
   <h2>Häufige Fragen (FAQ)</h2>
-  <details><summary>Wie genau sind die Signale?</summary><p>Der Bot kombiniert 5 Indikatoren mit einem Confidence-Score. Kein System ist 100 % genau – nutze immer dein eigenes Risikomanagement und plane mit dem Stop-Loss.</p></details>
-  <details><summary>Brauche ich Trading-Erfahrung?</summary><p>Nein. Die Signale kommen mit klarer Einstiegs-, SL- und TP-Vorgabe, und der Bot erklärt die Logik hinter jedem Signal.</p></details>
-  <details><summary>Wie bezahle ich?</summary><p>Per Karte oder Krypto über OxaPay oder per Karte über Gumroad. Nach der Zahlung gibst du <strong>/redeem</strong> mit deinem Code ein.</p></details>
-  <details><summary>Kann ich jederzeit kündigen?</summary><p>Ja. Das Abo läuft 1 Jahr und wird nicht automatisch verlängert – du behältst die Kontrolle.</p></details>
+  <details><summary>Wie genau sind die Signale?</summary><p>Der Bot kombiniert 5 Indikatoren mit einem Confidence-Score. Kein System ist 100 % genau.</p></details>
+  <details><summary>Brauche ich Trading-Erfahrung?</summary><p>Nein. Die Signale kommen mit klarer Einstiegs-, SL- und TP-Vorgabe.</p></details>
+  <details><summary>Wie bezahle ich?</summary><p>Per Karte oder Krypto über OxaPay oder per Karte über Gumroad. Nach der Zahlung <strong>/redeem</strong> mit deinem Code.</p></details>
+  <details><summary>Kann ich jederzeit kündigen?</summary><p>Ja. Das Abo läuft 1 Jahr und wird nicht automatisch verlängert.</p></details>
 
   <h2 id="fazit">Mein Fazit</h2>
-  <p>Für alle, die ohne permanente Chart-Beobachtung handeln wollen, ist der <strong>Trading Signals Bot</strong> ein sinnvoller Begleiter: datenbasierte Signale, klare Risikovorgaben und unkomplizierte Nutzung direkt in Telegram. Schade ist lediglich die fehlende Integrations-API – wer automatisierte Ausführungen (etwa in einen Broker) erwartet, wird enttäuscht. Für Signal-Alerts und Entscheidungsunterstützung erfüllt er seinen Zweck jedoch zuverlässig.</p>
-  <p>Meine Empfehlung: Nutze die <strong>7-Tage-Testphase</strong> konsequent und beobachte, wie du die Signale in dein eigenes Risikomanagement einordnest. Dann entscheide fundiert, ob sich das Abo für dich rechnet.</p>
+  <p>Für alle, die ohne permanente Chart-Beobachtung handeln wollen, ist der <strong>Trading Signals Bot</strong> ein sinnvoller Begleiter. Meine Empfehlung: Nutze die <strong>7-Tage-Testphase</strong> konsequent und beobachte, wie du die Signale in dein eigenes Risikomanagement einordnest.</p>
 
   <div class="cta-box">
     <h2>Starte jetzt kostenlos</h2>
@@ -289,38 +291,25 @@
     <a class="btn" href="https://t.me/cryptoalertbot225bot" target="_blank" rel="noopener noreferrer">Trading Bot testen</a>
     <p class="cta-note">Keine Vorkenntnisse nötig · jederzeit kündbar</p>
   </div>
-
 </article>
-
 <footer>
-  <div class="brand"><a href="/"><img src="/images/logo.png" alt="Trading Signals Logo"></a></div>
-  <p>Keine Finanzberatung – Handel immer auf eigene Verantwortung.</p>
+  <div class="brand">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF453A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="6"/><path d="M8 14v-1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1"/><circle cx="10" cy="9" r="1" fill="#FF453A" stroke="none"/><circle cx="14" cy="9" r="1" fill="#FF453A" stroke="none"/></svg>
+    Trading Signals
+  </div>
+  <p>Keine Finanzberatung – Handel immer auf eigene Verantwortung. · <a href="/erfahrungsbericht/">Erfahrungsbericht</a> · <a href="/ratgeber/">Ratgeber</a></p>
 </footer>
-
-<script>
-  // Reading progress bar
-  var bar = document.getElementById('progress');
-  window.addEventListener('scroll', function () {
-    var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
-    var p = max > 0 ? (h.scrollTop / max) * 100 : 0;
-    bar.style.width = p + '%';
-  }, { passive: true });
-</script>
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Der Trading Signals Bot – Mein ehrlicher Erfahrungsbericht",
-  "description": "Ehrlicher Test des Trading Signals Telegram Bots: Krypto, Aktien & Gold Signale. Funktionen, Preise, Vor- & Nachteile und Fazit.",
+  "description": "Ehrlicher Test des Trading Signals Telegram Bots: Krypto, Aktien & Gold Signale.",
   "datePublished": "2026-09-28",
-  "dateModified": "2026-09-28",
   "inLanguage": "de-CH",
-  "author": { "@type": "Person", "name": "Lukas Berger", "image": "https://crypto-signale.pw/erfahrungsbericht/images/lukas-berger.jpg" },
+  "author": { "@type": "Person", "name": "Lukas Berger" },
   "publisher": { "@type": "Organization", "name": "Trading Signals" },
-  "mainEntityOfPage": "https://crypto-signale.pw/erfahrungsbericht/",
-  "about": { "@type": "SoftwareApplication", "name": "Trading Signals Bot", "applicationCategory": "FinanceApplication" }
+  "mainEntityOfPage": "https://crypto-signale.pw/erfahrungsbericht/"
 }
 </script>
 </body>
