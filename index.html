@@ -1,52 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ELIX - BEST AI TRADING BOT 2026</title>
 
-<!-- TON SOCIAL BAR ADSTERRA -->
+<!-- SOCIAL BAR - GAGNE A CHAQUE VISITE -->
 <script data-cfasync="false" src="https://bicea.org/14/3f4594dd55767ccd4dadedccf3743d63"></script>
 
 <style>
 body { margin:0; font-family:Arial; background:#0a0a0a; color:white; display:flex; justify-content:center; align-items:center; min-height:100vh; text-align:center; }
-.container { padding:20px; }
-h1 { color:#00ff88; font-size:28px; }
-.locked-btn { background:#333; color:#888; padding:18px 30px; border-radius:12px; font-size:18px; margin-top:20px; border:none; }
-.unlocked-btn { background:#ff6a00; color:white; padding:18px 30px; border-radius:12px; font-size:20px; font-weight:bold; margin-top:20px; border:none; cursor:pointer; display:none; text-decoration:none; display:inline-block; }
-#status { margin-top:15px; color:#00ff88; display:none; }
+.container { padding:20px; max-width:400px; }
+h1 { color:#00ff88; font-size:28px; line-height:1.2; }
+.locked-btn { background:#333; color:#888; padding:18px 30px; border-radius:12px; font-size:18px; margin-top:20px; border:none; width:100%; }
+.unlocked-btn { background:#ff6a00; color:white; padding:18px 30px; border-radius:12px; font-size:20px; font-weight:bold; margin-top:20px; border:none; cursor:pointer; width:100%; text-decoration:none; display:none; }
+#status { margin-top:15px; color:#00ff88; display:none; font-weight:bold; }
 </style>
 </head>
 <body>
 
 <div class="container">
 <h1>ELIX AI BOT<br>98% WIN RATE</h1>
-<p>Best AI Trading Bot 2026<br>Double click anywhere to unlock</p>
+<p>Best AI Trading Bot 2026<br>Double-clique pour débloquer</p>
 
-<button id="lockedBtn" class="locked-btn">🔒 DOUBLE CLICK TO UNLOCK</button>
+<button id="lockedBtn" class="locked-btn">🔒 DOUBLE CLIC POUR DEBLOQUER</button>
 
-<a id="unlockedBtn" class="unlocked-btn" href="https://t.me/tradbot2026" target="_blank">✅ REJOIGNEZ TELEGRAM - Débloqué !</a>
+<a id="unlockedBtn" class="unlocked-btn" href="#" onclick="gagneEtVaSurTelegram(); return false;">✅ REJOIGNEZ TELEGRAM - Débloqué !</a>
 
 <div id="status">✅ Débloqué ! Cliquez pour rejoindre</div>
 </div>
 
 <script>
-let clicks = 0;
-document.addEventListener('dblclick', function() {
-  document.getElementById('lockedBtn').style.display = 'none';
-  document.getElementById('unlockedBtn').style.display = 'inline-block';
-  document.getElementById('status').style.display = 'block';
-});
+// REMPLACE ICI TON LIEN TELEGRAM
+const LIEN_TELEGRAM = "https://t.me/tradbot2026"; 
+const LIEN_DIRECT = "https://auctionr.org/4/3384d567915ded3710cd674e85dfabb9";
 
+function gagneEtVaSurTelegram() {
+  // 1. Ouvre la pub et tu gagnes de l'argent
+  window.open(LIEN_DIRECT, '_blank');
+  // 2. Après 300ms, l'envoie sur Telegram et tu gardes le client
+  setTimeout(() => {
+    window.location.href = LIEN_TELEGRAM;
+  }, 300);
+}
+
+let unlocked = false;
+function unlock() {
+  if(unlocked) return;
+  unlocked = true;
+  document.getElementById('lockedBtn').style.display = 'none';
+  document.getElementById('unlockedBtn').style.display = 'block';
+  document.getElementById('status').style.display = 'block';
+}
+
+document.addEventListener('dblclick', unlock);
 document.addEventListener('click', function() {
-  clicks++;
-  if(clicks >= 2) {
-    document.getElementById('lockedBtn').style.display = 'none';
-    document.getElementById('unlockedBtn').style.display = 'inline-block';
-    document.getElementById('status').style.display = 'block';
-  }
+  // débloque après 2 clics rapides aussi
+  if(!unlocked) unlock();
 });
 </script>
 
 </body>
-</html>
+  </html>
